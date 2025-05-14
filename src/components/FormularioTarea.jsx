@@ -1,18 +1,27 @@
-import React from 'react';
-import eliminarIcono from '../assets/no.png'; 
+import React, { useState } from 'react';
 
-const ListaTareas = ({ tareas, onEliminar }) => {
+const FormularioTarea = ({ onAgregar }) => {
+  const [texto, setTexto] = useState('');
+
+  const manejarSubmit = (e) => {
+    e.preventDefault();
+    if (texto.trim()) {
+      onAgregar(texto.trim());
+      setTexto('');
+    }
+  };
+
   return (
-    <ul>
-      {tareas.map((tarea) => (
-        <li key={tarea.id}>
-          {tarea.texto}
-          <button onClick={() => onEliminar(tarea.id)} style={{ marginLeft: '10px' }} > 
-            <img src = {eliminarIcono} alt="Eliminar" width="20" height="20" /> </button>
-        </li>
-      ))}
-    </ul>
+    <form onSubmit={manejarSubmit}>
+      <input
+        type="text"
+        placeholder="Escribe una tarea..."
+        value={texto}
+        onChange={(e) => setTexto(e.target.value)}
+      />
+      <button type="submit">Agregar</button>
+    </form>
   );
 };
 
-export default ListaTareas;
+export default FormularioTarea;

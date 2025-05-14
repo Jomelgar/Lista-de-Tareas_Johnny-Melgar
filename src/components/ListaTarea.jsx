@@ -1,27 +1,18 @@
-import React,{useState} from 'react';
+import React from 'react';
 
-const FormularioTarea = ({ onAgregar }) => {
-  const [texto, setTexto] = useState('');
-
-  const manejarSubmit = (e) => {
-    e.preventDefault();
-    if (texto.trim()) {
-      onAgregar(texto);
-      setTexto('');
-    }
-  };
-
+const ListaTareas = ({ tareas, onEliminar }) => {
   return (
-    <form>
-      <input
-        type="text"
-        placeholder="Escribe una tarea.."
-        value={texto}
-        onChange={(e) => setTexto(e.target.value)}
-      />
-      <button type="button" onClick={manejarSubmit}>Agregar</button>
-    </form>
+    <ul>
+      {tareas.map((tarea) => (
+        <li key={tarea.id}>
+          {tarea.texto}
+          <button onClick={() => onEliminar(tarea.id)}>
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Eliminar" width="20" />
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 };
 
-export default FormularioTarea;
+export default ListaTareas;
